@@ -30,19 +30,18 @@ function DriverDetail() {
     return <div className="p-20 w-full">Loading...</div>;
   }
 
-  const driverImage = data.driver?.images[0]?.imageUrl;
-  const driverImageName = data.driver?.images[0]?.name;
-  const driverName = data.driver?.name;
-  const driverPhone = data.driver?.phoneNumber;
-  const driverEmail = data.driver?.email;
+  const driverImage = data[0]?.images[1]?.imageUrl;
+  const driverImageName = data[0]?.images[2]?.name;
+  const driverName = data[0]?.name;
+
+  const driverPhone = data[0]?.phoneNumber;
+  const driverEmail = data[0]?.email;
   const vehicleClass = data.vehicles?.vehicleClass;
   const vehicleModel = data.vehicles?.model;
   const vehicleYear = data.vehicles?.year;
-  const aadharCard = data.driver?.images[0]?.imageUrl;
-  const vehiclePhoto = data.driver?.images[3]?.imageUrl;
-  const licenesPhoto = data.driver?.images[5]?.imageUrl;
-
-  console.log(data);
+  const aadharCard = data[0]?.images[0]?.imageUrl;
+  const vehiclePhoto = data[0]?.images[2]?.imageUrl;
+  const licenesPhoto = data[0]?.images[3]?.imageUrl;
 
   return (
     <div className="p-20 w-full overflow-auto">
