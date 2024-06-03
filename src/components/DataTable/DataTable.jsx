@@ -41,7 +41,7 @@ function DataTable() {
 
   return (
     <div className="w-full px-9">
-      <h1 className="font-bold py-6 text-4xl">Driver List</h1>
+      <h1 className="font-bold py-6 text-4xl">Drivers</h1>
       <div className="border rounded-md overflow-auto h-[80%] w-full">
         <table className="w-full">
           <thead className="bg-gray-100 sticky top-0">

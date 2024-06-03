@@ -2,12 +2,14 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 
 import "./index.css";
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
 import DataTable from "./components/DataTable/DataTable.jsx";
 import DriverDetail from "./components/driverDetail.jsx";
 import Login from "./pages/Login.jsx";
 import Layout from "./pages/Layout.jsx";
 import DashBoard from "./components/dashboard.jsx";
+import Payment from "./components/payment";
+import Rides from "./components/rides";
 
 const router = createBrowserRouter([
   {
@@ -22,15 +24,27 @@ const router = createBrowserRouter([
         index: true,
         element: <DashBoard />,
       },
+
       {
         path: "/drivers",
-        element: <DataTable />,
-        children: [
-          {
-            path: "/drivers/:id",
-            element: <DriverDetail />,
-          },
-        ],
+        element: (
+          <>
+            <DataTable />
+            {/* <Outlet /> */}
+          </>
+        ),
+      },
+      {
+        path: "/drivers/:id",
+        element: <DriverDetail />,
+      },
+      {
+        path: "/payments",
+        element: <Payment />,
+      },
+      {
+        path: "/rides",
+        element: <Rides />,
       },
     ],
   },
