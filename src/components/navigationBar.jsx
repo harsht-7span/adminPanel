@@ -43,7 +43,7 @@ function NavigationBar() {
           return (
             <Link key={index} to={item.path}>
               <div
-                className={`flex items-center gap-3 cursor-pointer py-3 ${
+                className={`cursor-pointer py-3 ${
                   isActive
                     ? "bg-gray-300 border-r-4 border-black"
                     : "hover:bg-gray-300 hover:border-r-4 hover:border-black"

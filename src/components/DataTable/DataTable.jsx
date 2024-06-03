@@ -64,7 +64,7 @@ function DataTable() {
                 <td className="py-5">
                   <img
                     src={user?.images[0]?.imageUrl}
-                    alt="Driver"
+                    alt={user?.images[0]?.name}
                     className="object-cover w-10 h-10 rounded-full"
                   />
                 </td>
