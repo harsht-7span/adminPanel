@@ -14,18 +14,20 @@ function NavigationBar() {
       path: "/",
     },
     {
-      name: "Driver",
+      name: "Drivers",
       icon: <Driver className="w-6 h-6" />,
       path: "/drivers",
     },
 
     {
-      name: "Payment",
+      name: "Payments",
       icon: <PayCard className="w-6 h-6" />,
+      path: "/payments",
     },
     {
-      name: "Ride",
+      name: "Rides",
       icon: <Steering className="w-6 h-6" />,
+      path: "/rides",
     },
   ];
 
@@ -33,9 +35,9 @@ function NavigationBar() {
 
   return (
     <div>
-      <h1 className="font-bold text-2xl">EasyGo</h1>
+      <h1 className="font-bold text-2xl px-3">EasyGo</h1>
 
-      <div className="space-y-5 pt-12">
+      <div className="space-y-5 pt-12 ">
         {navItems.map((item, index) => {
           const isActive = location.pathname === item.path;
           return (
@@ -47,8 +49,10 @@ function NavigationBar() {
                     : "hover:bg-gray-300 hover:border-r-4 hover:border-black"
                 }`}
               >
-                {item.icon}
-                <p className="font-normal text-xl">{item.name}</p>
+                <div className="flex items-center gap-3 px-3">
+                  {item.icon}
+                  <p className="font-normal text-xl">{item.name}</p>
+                </div>
               </div>
             </Link>
           );

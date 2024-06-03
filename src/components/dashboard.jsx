@@ -5,7 +5,6 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { bookingList, driver, user } from "@/api/driver";
 import useSWR from "swr";
 
-// Register the components
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const DashBoard = () => {
@@ -104,14 +103,14 @@ const DashBoard = () => {
           </div>
           <div className="text-4xl font-semibold space-y-6 bg-gray-200 rounded-xl p-5 h-fit">
             <p>
-              No of User: <span>{userData.length}</span>
+              No. of Users: <span>{userData.length}</span>
             </p>
             <p>
-              No of Driver: <span>{driverData.length}</span>
+              No. of Drivers: <span>{driverData.length}</span>
             </p>
 
             <p>
-              No of Booking: <span>{bookingData.length}</span>
+              No. of Booking: <span>{bookingData.length}</span>
             </p>
           </div>
         </div>
