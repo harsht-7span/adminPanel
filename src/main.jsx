@@ -8,7 +8,7 @@ import DriverDetail from "./components/driverDetail.jsx";
 import Login from "./pages/Login.jsx";
 import Layout from "./pages/Layout.jsx";
 import DashBoard from "./components/dashboard.jsx";
-import Payment from "./components/payment";
+import Payment from "./components/payments";
 import Rides from "./components/rides";
 
 const router = createBrowserRouter([

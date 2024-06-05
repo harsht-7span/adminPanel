@@ -1,15 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { DataTable2 } from "./DataTable/DataTable2";
 import { useLocation, useNavigate } from "react-router-dom";
-import { getAllRides } from "@/api/rides";
+import { getAllPayment } from "@/api/payment";
 
-function Rides() {
+function Payments() {
   const columns = [
-    { Header: "Pickup", accessorKey: "pickupLocation" },
-    { Header: "Dropoff", accessorKey: "dropoffLocation" },
-    { Header: "Vehicle", accessorKey: "vehicleClass" },
-    { Header: "Fare", accessorKey: "fare" },
-    { Header: "Status", accessorKey: "status" },
+    {
+      header: "#",
+      accessorKey: "index",
+      cell: ({ row }) => row.index + 1,
+    },
+    { header: "Name", accessorKey: "customer.name" },
+    { header: "Fare", accessorKey: "fare" },
+    { header: "Payment Method", accessorKey: "paymentMethod" },
+    { header: "Status", accessorKey: "status" },
+    { header: "Email", accessorKey: "customer.email" },
+    { header: "Phone", accessorKey: "customer.phoneNumber" },
   ];
 
   const [data, setData] = useState([]);
@@ -24,8 +30,7 @@ function Rides() {
   const fetchData = async (page = 1) => {
     try {
       setLoading(true);
-      const response = await getAllRides();
-      console.log(response);
+      const response = await getAllPayment();
       setData(response.data.data);
       setPageCount(response.data.data.length);
       const totalItems = response.data.data.length;
@@ -47,11 +52,11 @@ function Rides() {
 
   useEffect(() => {
     fetchData(pageIndex + 1);
-  }, [pageIndex]);
+  }, []);
 
   return (
     <div className="w-full px-9">
-      <h1 className="font-bold py-6 text-4xl">Rides</h1>
+      <h1 className="font-bold py-6 text-4xl">Payments</h1>
       <DataTable2
         onPaginationChange={({ pageIndex }) => {
           setPageIndex(pageIndex);
@@ -75,4 +80,4 @@ function Rides() {
   );
 }
 
-export default Rides;
+export default Payments;
