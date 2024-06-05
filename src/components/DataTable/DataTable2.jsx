@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
 import clsx from "clsx";
-import { DataTablePagination } from "./pagination";
+import { DataTablePagination } from "./DataTablePagination";
 export function DataTable2({
   columns,
   data,
@@ -53,7 +53,7 @@ export function DataTable2({
   }, [pagination.pageIndex]);
 
   return (
-    <div className="flex flex-col h-[calc(100dvh-150px)] justify-between">
+    <div className="flex flex-col justify-between">
       <div className="relative h-full overflow-auto flex flex-col">
         <Table className="whitespace-nowrap">
           <TableHeader className="sticky top-0 bg-white shadow">
@@ -165,11 +165,11 @@ sticky left-0 flex flex-col items-center justify-center flex-1 gap-3 text-2xl"
         )}
       </div>
 
-      {!loading && data.length > 0 ? (
+      {/* {!loading && data.length > 0 ? (
         <DataTablePagination table={table} />
       ) : (
         <></>
-      )}
+      )} */}
     </div>
   );
 }
