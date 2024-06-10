@@ -11,7 +11,7 @@ export const bookingList = async () => {
 };
 
 export const driverDetail = async (id) => {
-  return axiosClient.get(`/driver/${id}`);
+  return axiosClient.get(`/driver/?id=${id}`);
 };
 
 export const verifiedDriver = async (id, payload) => {
