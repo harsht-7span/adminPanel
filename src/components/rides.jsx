@@ -5,6 +5,11 @@ import { getAllRides } from "@/api/rides";
 
 function Rides() {
   const columns = [
+    {
+      header: "#",
+      accessorKey: "index",
+      cell: ({ row }) => row.index + 1,
+    },
     { Header: "Pickup", accessorKey: "pickupLocation" },
     { Header: "Dropoff", accessorKey: "dropoffLocation" },
     { Header: "Vehicle", accessorKey: "vehicleClass" },

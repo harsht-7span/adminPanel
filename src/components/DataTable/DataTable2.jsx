@@ -14,8 +14,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
-import clsx from "clsx";
-import { DataTablePagination } from "./DataTablePagination";
+
 export function DataTable2({
   columns,
   data,
@@ -53,9 +52,9 @@ export function DataTable2({
   }, [pagination.pageIndex]);
 
   return (
-    <div className="flex flex-col justify-between">
+    <div className="flex flex-col  h-[calc(100dvh-150px)] justify-between overflow-auto">
       <div className="relative h-full overflow-auto flex flex-col">
-        <Table className="whitespace-nowrap">
+        <Table>
           <TableHeader className="sticky top-0 bg-white shadow">
             {table.getHeaderGroups().map((headerGroup, headerGroupInd) => (
               <Fragment key={headerGroupInd}>
