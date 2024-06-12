@@ -5,6 +5,7 @@ import { PayCard } from "./ui/payCard";
 import { Steering } from "./ui/steering";
 
 import { Link, useLocation } from "react-router-dom";
+import { Booking } from "@/assets/icons/booking";
 
 function NavigationBar() {
   const navItems = [
