@@ -1,0 +1,12 @@
+  const handleDelete = async (id) => {
+    try {
+      setLoading(true);
+      console.log(id);
+      await deleteRide(id);
+      setData((prevData) => [...prevData.filter((ride) => ride._id !== id)]);
+    } catch (error) {
+      console.error("Error deleting ride:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
