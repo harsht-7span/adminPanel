@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { DataTable2 } from "./DataTable/DataTable2";
 import { useLocation, useNavigate } from "react-router-dom";
-import { getAllRides } from "@/api/rides";
+import { deleteRide, getAllRides } from "@/api/rides";
 
 function Rides() {
   const columns = [
@@ -15,6 +15,18 @@ function Rides() {
     { Header: "Vehicle", accessorKey: "vehicleClass" },
     { Header: "Fare", accessorKey: "fare" },
     { Header: "Status", accessorKey: "status" },
+    {
+      Header: "Delete",
+      accessorKey: "delete",
+      cell: ({ row }) => (
+        <button
+          onClick={() => handleDelete(row.original._id)}
+          className="bg-red-200 px-2 rounded text-red-500 hover:text-white hover:bg-red-500  "
+        >
+          Delete
+        </button>
+      ),
+    },
   ];
 
   const [data, setData] = useState([]);
@@ -30,7 +42,6 @@ function Rides() {
     try {
       setLoading(true);
       const response = await getAllRides();
-      console.log(response);
       setData(response.data.data);
       setPageCount(response.data.data.length);
       const totalItems = response.data.data.length;
@@ -48,6 +59,18 @@ function Rides() {
       searchParams.set(key, params[key]);
     });
     return searchParams.toString();
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      setLoading(true);
+      await deleteRide(id);
+      setData((prevData) => [...prevData.filter((ride) => ride._id !== id)]);
+    } catch (error) {
+      console.error("Error deleting ride:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
