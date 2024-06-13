@@ -1,10 +1,67 @@
-import { driver, verifiedDriver } from "@/api/driver";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { DataTable2 } from "./DataTable2";
+import { useLocation, useNavigate } from "react-router-dom";
+import { deleteDriver, driver, verifiedDriver } from "@/api/driver";
 
 function DataTable() {
+  const columns = [
+    {
+      Header: "#",
+      accessorKey: "#",
+      cell: ({ row }) => row.index + 1,
+    },
+    {
+      Header: "Image",
+      accessorKey: "image",
+      cell: ({ row }) => (
+        <img
+          src={row.original.image}
+          alt={row.original.name}
+          className="object-cover w-10 h-10 rounded-full"
+        />
+      ),
+    },
+    { Header: "Driver Name", accessorKey: "name" },
+    { Header: "Email", accessorKey: "email" },
+    {
+      Header: "Status",
+      accessorKey: "isVerified",
+      cell: ({ row }) => (
+        <button
+          className={`verify-button text-center w-16 font-semibold rounded ${
+            row.original.isVerified
+              ? "bg-green-200 text-green-500"
+              : "bg-red-200 text-red-500"
+          }`}
+          onClick={(event) =>
+            handleVerify(row.original._id, !row.original.isVerified, event)
+          }
+        >
+          {row.original.isVerified ? "Accept" : "Reject"}
+        </button>
+      ),
+    },
+    {
+      Header: "Delete",
+      accessorKey: "delete",
+      cell: ({ row }) => (
+        <button
+          onClick={() => handleDelete(row.original._id)}
+          className="bg-red-200 px-2 rounded text-red-500 hover:text-white hover:bg-red-500  "
+        >
+          Delete
+        </button>
+      ),
+    },
+  ];
+
   const [data, setData] = useState([]);
-  const col = ["#", "Image", "Driver Name", "Email", "Status"];
+  const [pageIndex, setPageIndex] = useState(0);
+  const [pageCount, setPageCount] = useState(0);
+  const [columnVisibility, setColumnVisibility] = useState({});
+  const [loading, setLoading] = useState(false);
+  const totalResult = 10;
+  const location = useLocation();
   const navigate = useNavigate();
 
   const handleVerify = async (userId, isVerified, event) => {
@@ -28,10 +85,39 @@ function DataTable() {
 
   const fetchData = async () => {
     try {
+      setLoading(true);
       const response = await driver();
-      setData(response.data.data);
+      const drivers = response.data.data.map((driver, index) => ({
+        ...driver,
+        index,
+        image: driver?.images[0]?.imageUrl,
+      }));
+      setData(drivers);
+      setPageCount(Math.ceil(drivers.length / totalResult));
     } catch (error) {
       console.error("Error fetching data:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const setSearchQueryParams = (params) => {
+    const searchParams = new URLSearchParams(location.search);
+    Object.keys(params).forEach((key) => {
+      searchParams.set(key, params[key]);
+    });
+    return searchParams.toString();
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      setLoading(true);
+      await deleteDriver(id);
+      setData((prevData) => [...prevData.filter((ride) => ride._id !== id)]);
+    } catch (error) {
+      console.error("Error deleting ride:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -42,55 +128,26 @@ function DataTable() {
   return (
     <div className="w-full px-9">
       <h1 className="font-bold py-6 text-4xl">Drivers</h1>
-      {data.length > 0 ? (
-        <div className="border rounded-md overflow-auto h-[80%] w-full">
-          <table className="w-full">
-            <thead className="bg-gray-100 sticky top-0">
-              <tr className="h-16">
-                {col.map((column, index) => (
-                  <th className="text-start pl-5" key={index}>
-                    {column}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {data.map((user, index) => (
-                <tr
-                  key={user._id}
-                  onClick={() => navigate(`/drivers/${user._id}`)}
-                  className="font-normal text-base pl-5 cursor-pointer"
-                >
-                  <td>{index + 1}</td>
-                  <td className="py-5">
-                    <img
-                      src={user?.images[0]?.imageUrl}
-                      alt={user?.images[0]?.name}
-                      className="object-cover w-10 h-10 rounded-full"
-                    />
-                  </td>
-                  <td className="py-5">{user.name}</td>
-                  <td>{user.email}</td>
-                  <td>
-                    <button
-                      className={`verify-button text-center w-16 font-semibold rounded ${
-                        user.isVerified
-                          ? "bg-green-200 text-green-500"
-                          : "bg-red-200 text-red-500"
-                      }`}
-                      onClick={(event) =>
-                        handleVerify(user._id, !user.isVerified, event)
-                      }
-                    >
-                      {user.isVerified ? "Accept" : "Reject"}
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      ) : (
+      <DataTable2
+        onPaginationChange={({ pageIndex }) => {
+          setPageIndex(pageIndex);
+          // navigate(
+          //   location.pathname +
+          //     "?" +
+          //     setSearchQueryParams({ page: pageIndex + 1 })
+          // );
+        }}
+        totalResult={totalResult}
+        pageIndex={pageIndex}
+        pageCount={pageCount}
+        columns={columns}
+        data={data}
+        columnVisibility={columnVisibility}
+        setColumnVisibility={setColumnVisibility}
+        handleClickRow={(row) => navigate(`/drivers/${row._id}`)}
+        loading={loading}
+      />
+      {data.length === 0 && !loading && (
         <div className="flex justify-center items-center h-[80%]">
           <div className="flex flex-col justify-center items-center">
             <svg

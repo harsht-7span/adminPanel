@@ -14,7 +14,6 @@ function DriverDetail() {
     async function fetchData() {
       try {
         const response = await driverDetail(params.id);
-        console.log(response);
         setData(response.data.data);
       } catch (error) {
         console.error("Error fetching data:", error);
