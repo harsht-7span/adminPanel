@@ -17,3 +17,7 @@ export const driverDetail = async (id) => {
 export const verifiedDriver = async (id, payload) => {
   return axiosClient.put(`/driver/${id}`, payload);
 };
+
+export const deleteDriver = async (id) => {
+  return axiosClient.delete(`/driver/${id}`);
+};

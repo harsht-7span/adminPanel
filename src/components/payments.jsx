@@ -60,11 +60,11 @@ function Payments() {
       <DataTable2
         onPaginationChange={({ pageIndex }) => {
           setPageIndex(pageIndex);
-          navigate(
-            location.pathname +
-              "?" +
-              setSearchQueryParams({ page: pageIndex + 1 })
-          );
+          // navigate(
+          //   location.pathname +
+          //     "?" +
+          //     setSearchQueryParams({ page: pageIndex + 1 })
+          // );
         }}
         totalResult={totalResult}
         pageIndex={pageIndex}
